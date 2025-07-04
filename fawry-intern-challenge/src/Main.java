@@ -46,7 +46,8 @@ public class Main {
         cart.addProduct(cheese, 2);
         cart.addProduct(tv, 3);
         cart.addProduct(scratchCard, 1);
-        cart.listShippableItems();
+
+        CheckoutHandler.checkout(cart);
 
 
     }

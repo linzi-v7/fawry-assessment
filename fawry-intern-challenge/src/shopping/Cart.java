@@ -95,10 +95,11 @@ public class Cart {
     {
         for (CartItem item : items) {
             if (item.isShippable()) {
+                needsShipping = true;
                 return true;
             }
         }
-
+        needsShipping = false;
         return false;
     }
 
