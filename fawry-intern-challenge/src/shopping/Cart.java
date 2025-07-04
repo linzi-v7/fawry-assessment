@@ -12,7 +12,7 @@ public class Cart {
     //the user currently using this cart
     Customer currentUser;
     ArrayList<CartItem> items;
-    float cumulativeSubtotal = 0.0F;
+    double cumulativeSubtotal = 0.0F;
     boolean needsShipping = false;
 
     public Cart(Customer currentUser) {
@@ -29,6 +29,10 @@ public class Cart {
     //Realistically, user shouldnt be able to add items out of stock
     //and expired items should be checked on addition not on checkout.
     public boolean addProduct(Product product, int quantity) {
+        if (quantity <= 0) {
+            System.out.println("** CART: ERROR (addProduct), quantity must be >=1. **\n");
+            return false;
+        }
         int remainingQuantity = product.getQuantity() - quantity;
         //check in stock
         if (product.getQuantity() <= 0) {
@@ -61,7 +65,7 @@ public class Cart {
             }
         }
 
-        float addedPrice = product.getPrice() * quantity;
+        double addedPrice = product.getPrice() * quantity;
         cumulativeSubtotal += addedPrice;
         product.setQuantity(remainingQuantity);
         cartItem.addItemSubtotal(addedPrice);
@@ -91,16 +95,24 @@ public class Cart {
         return null;
     }
 
-    public boolean checkShippable()
+    public ArrayList<CartItem> checkShippable()
     {
+        ArrayList<CartItem> shippableItems = new ArrayList<>();
+        boolean found = false;
         for (CartItem item : items) {
             if (item.isShippable()) {
                 needsShipping = true;
-                return true;
+                found = true;
+                shippableItems.add(item);
             }
         }
+
+        if(found)
+        {
+            return shippableItems;
+        }
         needsShipping = false;
-        return false;
+        return null;
     }
 
     //list item count, item name and their subtotal price
@@ -132,5 +144,12 @@ public class Cart {
             }
         }
         System.out.println("Total Package Weight " + totalWeight + "kg");
+    }
+
+    public void resetCart()
+    {
+        this.items = new ArrayList<>();
+        cumulativeSubtotal = 0.0;
+        needsShipping = false;
     }
 }

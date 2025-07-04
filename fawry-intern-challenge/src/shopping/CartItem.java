@@ -58,7 +58,7 @@ public class CartItem {
         }
     }
 
-    public void addItemSubtotal(float itemSubtotal) {
+    public void addItemSubtotal(double itemSubtotal) {
         this.itemSubtotal += itemSubtotal;
     }
     public float getItemSubtotal() {

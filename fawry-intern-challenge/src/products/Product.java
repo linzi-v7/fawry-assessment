@@ -3,10 +3,10 @@ package products;
 public abstract class Product {
 
     protected String name;
-    protected float price;
+    protected double price;
     protected int  quantity;
 
-    public Product(String name, float price, int quantity) {
+    public Product(String name, double price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
@@ -20,11 +20,11 @@ public abstract class Product {
         this.name = name;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

@@ -19,12 +19,14 @@ public class CheckoutHandler {
             return false;
         }
 
-        if(cart.checkShippable())
+        if(cart.checkShippable() != null)
         {
             deliveryFee = Math.min(cart.cumulativeSubtotal * 0.14,10);
             System.out.println("** SHIPMENT NOTICE **");
             cart.listShippableItems();
         }
+
+        double totalPrice = cart.cumulativeSubtotal + deliveryFee;
 
         System.out.println("\n** CHECKOUT RECEIPT **");
         cart.listAllItems();
@@ -32,7 +34,24 @@ public class CheckoutHandler {
         System.out.println("--------------------------------");
         System.out.println("Subtotal\t\t\t\t\t" + cart.cumulativeSubtotal);
         System.out.println("Shipping\t\t\t\t\t" + deliveryFee);
-        System.out.println("Total Pr.\t\t\t\t\t" + (cart.cumulativeSubtotal + deliveryFee));
+        System.out.println("Total Pr.\t\t\t\t\t" + totalPrice);
+        System.out.println("** CURRENT BALANCE: " + cart.currentUser.getBalance() + " **");
+
+        double remainingBalance = cart.currentUser.getBalance() - totalPrice;
+
+        if(remainingBalance >= 0) //transaction success
+        {
+            System.out.println("** CHECKOUT: TRANSACTION SUCCESSFUL! **");
+            cart.currentUser.setBalance(remainingBalance);
+            System.out.println("** NEW BALANCE: " + cart.currentUser.getBalance() + " **");
+
+            if(cart.checkShippable() != null) {
+                ShippingService.ship(cart.checkShippable());
+            }
+        }
+        else{
+            System.out.println("** CHECKOUT: ERROR, INSUFFICIENT BALANCE! **");
+        }
         return true;
     }
 }

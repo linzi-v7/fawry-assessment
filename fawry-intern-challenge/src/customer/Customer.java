@@ -2,19 +2,19 @@ package customer;
 
 public class Customer {
     private final String name;
-    private float balance;
+    private double balance;
 
-   public Customer(String name, float balance)
+   public Customer(String name, double balance)
     {
         this.name = name;
         this.balance = balance;
     }
 
-    public float getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(float balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
@@ -25,7 +25,7 @@ public class Customer {
 
     public void printDetails()
     {
-        System.out.println("** CUSTOMER DETAILS **");
+        System.out.println("\n** CUSTOMER DETAILS **");
         System.out.println("NAME: " + name);
         System.out.println("BALANCE: " + balance);
         System.out.println("** END DETAILS **\n");
